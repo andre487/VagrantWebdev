@@ -57,6 +57,10 @@ cp /vagrant/provision/data/bind9/named.conf.local /etc/bind
 cp /vagrant/provision/data/resolv.conf /etc
 chattr +i /etc/resolv.conf
 
+#Vim
+sed -i 's/"syntax on/syntax on/g' /etc/vim/vimrc
+sed -i 's/"set background=dark/set background=dark/g' /etc/vim/vimrc
+
 
 #
 #Start services
