@@ -26,6 +26,8 @@ a2ensite default
 cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
 
 #MySQL
+sed -i 's/bind-address/#bind-address/g' /etc/mysql/my.cnf
+
 mysqld_safe --init-file=/vagrant/provision/data/mysql-init.sql &> /dev/null &
 echo "Wait for MySQL..."
 sleep 10s
