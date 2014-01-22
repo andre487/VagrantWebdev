@@ -1,0 +1,15 @@
+$TTL	3h
+$ORIGIN loc.
+
+@	IN	SOA	@ root (
+	1   ; Serial
+	8H  ; Refresh
+	15M ; Retry
+	1W  ; Expire
+	1D  ; Minimum TTL
+)   
+
+	IN	NS	@
+	IN	A	192.168.2.10
+*	IN	A	192.168.2.10
+
