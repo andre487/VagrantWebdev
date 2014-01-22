@@ -1,5 +1,5 @@
 from distutils.core import setup
-import py2exe
+import py2exe, os
 
 manifest = """
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
@@ -7,7 +7,6 @@ manifest = """
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
     <security>
       <requestedPrivileges>
-		<!-- TODO: uiAccess='false' -->
         <requestedExecutionLevel level='requireAdministrator' uiAccess='false' />
       </requestedPrivileges>
     </security>
@@ -22,34 +21,29 @@ manifest = """
 		publicKeyToken='1fc8b3b9a1e18e3b' />
     </dependentAssembly>
   </dependency>
-  <dependency>
-    <dependentAssembly>
-      <assemblyIdentity
-         type="win32"
-         name="Microsoft.Windows.Common-Controls"
-         version="6.0.0.0"
-         processorArchitecture="*"
-         publicKeyToken="6595b64144ccf1df"
-         language="*" />
-    </dependentAssembly>
-  </dependency>
 </assembly>
 """
 
 setup(
-	windows=[
+	name = "WinHosts Utility",
+	description = "Utility to patch hosts file for .loc zone",
+	author = "Andre",
+	version = "1.0",
+	console=[
 		{
 			"script": "WinHosts.py",
 			"other_resources": [(24, 1, manifest)],
 		}
 	],
-	name = "WinHosts Utility",
-	version = "1.0",
+	zipfile = "shared.lib",
 	options = {
 		"py2exe": {
 			"bundle_files": 1,
-			"compressed": True, 
+			"compressed": True,
+			"optimize": 2,
+			"excludes": ['_ssl', 'pyreadline', 'difflib', 'doctest', 'locale',  'optparse', 'pickle', 'calendar'],
+			"dll_excludes": ["msvcr71.dll", "w9xpopen.exe"],
+			"dist_dir": os.path.abspath(os.getcwd() + '/..'),
 		}
 	},
-	zipfile = None,
 )
