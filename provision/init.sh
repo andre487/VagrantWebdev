@@ -26,6 +26,7 @@ service memcached stop
 a2enmod rewrite
 a2enmod vhost_alias
 a2ensite default
+cp /vagrant/provision/data/apache2/php_patch.php /etc/apache2
 cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
 
 #MySQL
@@ -52,6 +53,7 @@ sed -i 's/bind 127.0.0.1/#bind 127.0.0.1/g' /etc/redis/redis.conf
 sed -i 's/-l 127.0.0.1/#-l 127.0.0.1/g' /etc/memcached.conf
 
 #DNS
+chattr -i /etc/resolv.conf
 cp /vagrant/provision/data/bind9/db.loc /etc/bind
 cp /vagrant/provision/data/bind9/named.conf.local /etc/bind
 cp /vagrant/provision/data/resolv.conf /etc

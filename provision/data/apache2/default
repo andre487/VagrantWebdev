@@ -13,6 +13,7 @@
 		AllowOverride All
 		Order allow,deny
 		allow from all
+		php_admin_value auto_prepend_file /etc/apache2/php_patch.php
 	</Directory>
 
 	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
