@@ -2,6 +2,7 @@
 	ServerAdmin webmaster@localhost
 	UseCanonicalName Off
 	VirtualDocumentRoot /var/www/%1
+	SetEnv DEBUG_SERVER 1
 
 	<Directory />
 		Options FollowSymLinks
@@ -26,5 +27,5 @@
 
 	# Possible values include: debug, info, notice, warn, error, crit,
 	# alert, emerg.
-	LogLevel crit
+	LogLevel error
 </VirtualHost>
