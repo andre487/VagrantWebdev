@@ -35,7 +35,7 @@ setup(
 			"other_resources": [(24, 1, manifest)],
 		}
 	],
-	zipfile = "shared.lib",
+	zipfile = None,
 	options = {
 		"py2exe": {
 			"bundle_files": 1,
