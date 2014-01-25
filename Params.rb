@@ -1,5 +1,33 @@
-CURRENT_DIR = File.dirname(__FILE__)
-PROVISION_DIR = CURRENT_DIR + '/provision'
+module Params
+	CURRENT_DIR = File.dirname(__FILE__)
+	PROVISION_DIR = CURRENT_DIR + "/provision"
 
-WWW_DIR = 'D:/htdocs'
-VM_MEMORY = 2048
+	def Params.windows?
+		(/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+	end
+
+	def Params.get
+		iniValues = {}
+		File.open(CURRENT_DIR + "/params.ini", "r") do |paramsFile|
+			paramsFile.each_line do |line|
+				matches = line.match(/^(.+?)\s*=\s*(.+)$/)
+				if matches
+					key, val = matches.captures
+					iniValues[key] = val
+				end
+			end
+		end
+
+		params = {
+			"server_ip" => iniValues["server_ip"],
+			"memory" => iniValues["memory"],
+		}
+		if windows?
+			params["www_dir"] = iniValues["www_dir.win32"]
+		else
+			params["www_dir"] = iniValues["www_dir.unix"]
+		end
+
+		return params
+	end
+end
