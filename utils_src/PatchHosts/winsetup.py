@@ -1,37 +1,38 @@
 from distutils.core import setup
 import py2exe, os
 
+current_dir = os.path.dirname(os.path.realpath(__file__))
 manifest = """
-<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
-<assembly xmlns='urn:schemas-microsoft-com:asm.v1' manifestVersion='1.0'>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
     <security>
       <requestedPrivileges>
-        <requestedExecutionLevel level='requireAdministrator' uiAccess='false' />
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
       </requestedPrivileges>
     </security>
   </trustInfo>
   <dependency>
     <dependentAssembly>
       <assemblyIdentity
-		type='win32'
-		name='Microsoft.VC90.CRT'
-		version='9.0.21022.8'
-		processorArchitecture='*'
-		publicKeyToken='1fc8b3b9a1e18e3b' />
+		type="win32"
+		name="Microsoft.VC90.CRT"
+		version="9.0.21022.8"
+		processorArchitecture="*"
+		publicKeyToken="1fc8b3b9a1e18e3b" />
     </dependentAssembly>
   </dependency>
 </assembly>
 """
 
 setup(
-	name = "WinHosts Utility",
+	name = "PatchHosts Utility",
 	description = "Utility to patch hosts file for .loc zone",
 	author = "Andre",
-	version = "1.0",
+	version = "1.1",
 	console=[
 		{
-			"script": "WinHosts.py",
+			"script": current_dir + "/PatchHosts.py",
 			"other_resources": [(24, 1, manifest)],
 		}
 	],
@@ -41,9 +42,9 @@ setup(
 			"bundle_files": 1,
 			"compressed": True,
 			"optimize": 2,
-			"excludes": ['_ssl', 'pyreadline', 'difflib', 'doctest', 'locale',  'optparse', 'pickle', 'calendar'],
+			"excludes": ["_ssl", "pyreadline", "difflib", "doctest", "locale",  "optparse", "pickle", "calendar"],
 			"dll_excludes": ["msvcr71.dll", "w9xpopen.exe"],
-			"dist_dir": os.path.abspath(os.getcwd() + '/../../bin'),
+			"dist_dir": os.path.abspath(current_dir + "/../../bin"),
 		}
 	},
 )
