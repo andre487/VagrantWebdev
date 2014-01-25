@@ -43,7 +43,7 @@ setup(
 			"optimize": 2,
 			"excludes": ['_ssl', 'pyreadline', 'difflib', 'doctest', 'locale',  'optparse', 'pickle', 'calendar'],
 			"dll_excludes": ["msvcr71.dll", "w9xpopen.exe"],
-			"dist_dir": os.path.abspath(os.getcwd() + '/..'),
+			"dist_dir": os.path.abspath(os.getcwd() + '/../../bin'),
 		}
 	},
 )
