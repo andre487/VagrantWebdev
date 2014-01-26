@@ -19,6 +19,8 @@ module Params
 		end
 
 		params = {
+			"box" => iniValues["box"],
+			"box_url" => iniValues["box_url"],
 			"server_ip" => iniValues["server_ip"],
 			"memory" => iniValues["memory"],
 		}
