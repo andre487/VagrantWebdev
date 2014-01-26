@@ -21,7 +21,7 @@
  - Memcached
  - DNS
  
-Так же внутри настроены SQLite, Vim, Python PIP, PHP Pear и другие приятные вещи.
+Так же внутри настроены SQLite, Vim, Python PIP, PHP Pear, PHPUnit (с дополнениями DbUnit и PHP_Invoker) и другие приятные вещи.
 
 Для пользователя `root` в MySQL и пользователя `postgres` в PostgreSQL установлен пароль `password`.
 
