@@ -28,7 +28,7 @@ echo "Using server IP $SERVER_IP"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y --no-install-recommends
-apt-get install -y bind9 dnsutils apache2 mysql-server mysql-client memcached php5 php-pear php5-mysql php5-memcache sqlite postgresql redis-server python-pip python-mysqldb python-imaging python-redis python-memcache git vim
+apt-get install -y bind9 dnsutils apache2 mysql-server mysql-client memcached php5 php-pear php5-mysql php5-memcache sqlite postgresql sphinxsearch redis-server python-pip python-mysqldb python-imaging python-redis python-memcache python-sphinx git vim
 
 pear config-set auto_discover 1
 pear install pear.phpunit.de/PHPUnit phpunit/DbUnit phpunit/PHP_Invoker
@@ -43,6 +43,7 @@ service mysql stop
 service postgresql stop
 service redis-server stop
 service memcached stop
+service sphinxsearch stop
 
 #Apache
 a2enmod rewrite
@@ -82,6 +83,10 @@ cp /vagrant/provision/data/resolv.conf /etc
 sed -i "s/{{SERVER_IP}}/${SERVER_IP}/g" /etc/bind/db.loc
 chattr +i /etc/resolv.conf
 
+#Sphinx
+cp /vagrant/provision/data/sphinx /etc/sphinxsearch -R
+chmod +x /etc/sphinxsearch/sphinx.conf
+
 #Vim
 sed -i "s/\"syntax on/syntax on/g" /etc/vim/vimrc
 sed -i "s/\"set background=dark/set background=dark/g" /etc/vim/vimrc
@@ -96,3 +101,4 @@ service mysql start
 service postgresql start
 service redis-server start
 service memcached start
+service sphinxsearch start
