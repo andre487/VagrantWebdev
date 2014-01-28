@@ -7,16 +7,16 @@ set -e
 #
 SERVER_IP=""
 for arg in "$@"; do
-	if [[ $arg == --server_ip=* ]]
-	then
-		SERVER_IP=${arg/--server_ip=/}
-	fi
+    if [[ ${arg} == --server_ip=* ]]
+    then
+        SERVER_IP=${arg/--server_ip=/}
+    fi
 done
 
-if [ $SERVER_IP == "" ]
+if [ ${SERVER_IP} == "" ]
 then
-	echo "Error! You must pass --server_ip=<IP>"
-	exit 1
+    echo "Error! You must pass --server_ip=<IP>"
+    exit 1
 fi
 
 echo "Using server IP $SERVER_IP"
@@ -59,7 +59,7 @@ echo "Wait for MySQL..."
 sleep 10s
 PID=`cat /var/run/mysqld/mysqld.pid`
 echo "Kill MySQL ($PID)..."
-kill $PID
+kill ${PID}
 sleep 10s
 echo "Go on"
 
@@ -79,7 +79,7 @@ chattr -i /etc/resolv.conf
 cp /vagrant/provision/data/bind9/db.loc /etc/bind
 cp /vagrant/provision/data/bind9/named.conf.local /etc/bind
 cp /vagrant/provision/data/resolv.conf /etc
-sed -i "s/{{SERVER_IP}}/$SERVER_IP/g" /etc/bind/db.loc
+sed -i "s/{{SERVER_IP}}/${SERVER_IP}/g" /etc/bind/db.loc
 chattr +i /etc/resolv.conf
 
 #Vim

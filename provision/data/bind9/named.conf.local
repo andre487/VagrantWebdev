@@ -10,4 +10,3 @@ zone "loc" {
         type master;            
         file "/etc/bind/db.loc";
 };                              
-

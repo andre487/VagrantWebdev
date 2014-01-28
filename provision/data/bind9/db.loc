@@ -1,14 +1,14 @@
-$TTL	3h
+$TTL    3h
 $ORIGIN loc.
 
-@	IN	SOA	@ root (
-	1   ; Serial
-	8H  ; Refresh
-	15M ; Retry
-	1W  ; Expire
-	1D  ; Minimum TTL
+@    IN    SOA    @ root (
+     1    ; Serial
+     8H   ; Refresh
+     15M  ; Retry
+     1W   ; Expire
+     1D   ; Minimum TTL
 )   
 
-	IN	NS	@
-	IN	A	{{SERVER_IP}}
-*	IN	A	{{SERVER_IP}}
+    IN    NS    @
+    IN    A    {{SERVER_IP}}
+*   IN    A    {{SERVER_IP}}
