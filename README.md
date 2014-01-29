@@ -4,7 +4,7 @@
  - [Vagrant](http://www.vagrantup.com/downloads.html)
  - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
-В качестве гостевой ОС используется Debian 7.2 Wheezy.
+В качестве гостевой ОС используется Debian 7 Wheezy.
 
 После развертывания, запускается из консоли командой `vagrant up` либо командным файлом `bin\up.bat`. 
 После этого начинается процесс инициализации, который длится достаточно долго, инициализация производится
