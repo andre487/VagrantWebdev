@@ -44,6 +44,7 @@ service postgresql stop
 service redis-server stop
 service memcached stop
 service sphinxsearch stop
+service exim4 stop
 
 #Apache
 a2enmod rewrite
@@ -87,6 +88,9 @@ chattr +i /etc/resolv.conf
 cp /vagrant/provision/data/sphinx /etc/sphinxsearch -R
 chmod +x /etc/sphinxsearch/sphinx.conf
 
+#Exin4
+cp /vagrant/provision/data/update-exim4.conf.conf /etc/exim4
+
 #Vim
 sed -i "s/\"syntax on/syntax on/g" /etc/vim/vimrc
 sed -i "s/\"set background=dark/set background=dark/g" /etc/vim/vimrc
@@ -102,3 +106,4 @@ service postgresql start
 service redis-server start
 service memcached start
 service sphinxsearch start
+service exim4 start
