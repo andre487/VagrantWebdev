@@ -87,7 +87,7 @@ sed -i "s/{{SERVER_IP}}/${SERVER_IP}/g" /etc/bind/db.loc
 chattr +i /etc/resolv.conf
 
 #Sphinx
-cp /vagrant/provision/data/sphinx /etc/sphinxsearch -R
+cp /vagrant/provision/data/sphinxsearch /etc -R
 chmod +x /etc/sphinxsearch/sphinx.conf
 
 #Exin4
