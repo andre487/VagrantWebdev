@@ -15,7 +15,6 @@ if hasattr(sys, "frozen") and sys.frozen in ("windows_exe", "console_exe"):
 else:
     current_dir = os.path.dirname(os.path.realpath(__file__))
 params_paths = (
-    "/etc/vagrant-webdev.ini",
     os.path.abspath(current_dir + "/../params.ini"),
     os.path.abspath(current_dir + "/../../params.ini"),
 )
