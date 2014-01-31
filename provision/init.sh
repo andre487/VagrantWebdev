@@ -28,7 +28,11 @@ echo "Using server IP $SERVER_IP"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y --no-install-recommends
-apt-get install -y bind9 dnsutils apache2 mysql-server mysql-client memcached php5 php-pear php5-mysql php5-memcache sqlite postgresql sphinxsearch redis-server python-pip python-mysqldb python-imaging python-redis python-memcache python-sphinx git vim
+apt-get install -y bind9 dnsutils apache2 mysql-server mysql-client memcached \
+ php5 php-pear php5-mysql php5-memcache \
+ sqlite postgresql sphinxsearch redis-server \
+ python-pip python-mysqldb python-imaging python-redis python-memcache python-sphinx \
+ git vim
 
 pear config-set auto_discover 1
 pear install pear.phpunit.de/PHPUnit phpunit/DbUnit phpunit/PHP_Invoker
