@@ -16,7 +16,7 @@ else:
     current_dir = os.path.dirname(os.path.realpath(__file__))
 params_paths = (
     os.path.abspath(current_dir + "/../params.ini"),
-    os.path.abspath(current_dir + "/../../params.ini"),
+    os.path.abspath(current_dir + "/../../../params.ini"),
 )
 
 
@@ -93,6 +93,7 @@ def get_hosts_file_content(hosts_path, hosts, params):
     our_section = "{0}{0}#{0}#{id} begin{0}#{0}".format(eol, id=params["vhosts_section_id"])
     for host in hosts:
         our_section += "{0}\t{1}.loc{2}".format(params["server_ip"], host, eol)
+        our_section += "{0}\t{1}.loc{2}".format(params["server_ip"], "www." + host, eol)
     our_section += "#{0}#{id} end{0}#{0}".format(eol, id=params["vhosts_section_id"])
     hosts_content += our_section
 

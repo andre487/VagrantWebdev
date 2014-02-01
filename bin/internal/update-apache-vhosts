@@ -1,0 +1,48 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import os
+import re
+
+
+site_file_path = "/etc/apache2/sites-available/default"
+pid_file_path = "/var/run/apache2.pid"
+
+
+def main():
+    print "Updating Apache2 virtual hosts using /var/www catalogs"
+
+    hosts = get_virtual_hosts_names()
+    file_content = get_site_file_content(hosts)
+    open(site_file_path, "w").write(file_content)
+
+    print "Hosts successfully added:\n * {0}.loc\n".format(".loc\n * ".join(hosts))
+    if os.path.exists(pid_file_path):
+        os.system("service apache2 restart")
+
+
+def get_virtual_hosts_names():
+    hosts = []
+    www_dir = "/var/www"
+    for name in os.listdir(www_dir):
+        if os.path.isdir(os.path.join(www_dir, name)):
+            hosts.append(name)
+    return hosts
+
+
+def get_site_file_content(hosts):
+    config_content = open(site_file_path, "r").read()
+    our_pattern = r"#\n+#\s*Vhosts\s+begin.+?#\s*Vhosts\s+end\n+#"
+    config_content = re.sub(our_pattern, "", config_content, flags=re.DOTALL)
+    config_content = config_content.strip()
+
+    our_section = "\n\n#\n# Vhosts begin\n#\n"
+    for host in hosts:
+        our_section += "Use VHost {0}.loc /var/www/{0}\n".format(host)
+    our_section += "#\n# Vhosts end\n#\n\n"
+    config_content += our_section
+
+    return config_content
+
+
+if __name__ == "__main__":
+    main()

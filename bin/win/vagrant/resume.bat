@@ -1,3 +1,3 @@
 @echo off
 cd "%~dp0\..\..\.."
-vagrant resume
+vagrant resume  & bin\win\utils\UpdateApacheVHosts.bat

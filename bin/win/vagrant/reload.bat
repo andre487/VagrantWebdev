@@ -1,3 +1,3 @@
 @echo off
 cd "%~dp0\..\..\.."
-vagrant reload
+vagrant reload & bin\win\utils\UpdateApacheVHosts.bat

@@ -28,14 +28,15 @@ echo "Using server IP $SERVER_IP"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y --no-install-recommends
-apt-get install -y apache2 mysql-server mysql-client memcached \
+apt-get install -y apache2 libapache2-mod-macro \
  php5 php-pear php5-mysql php5-memcache \
- sqlite postgresql sphinxsearch redis-server \
  python-pip python-mysqldb python-imaging python-redis python-memcache python-sphinx \
+ mysql-server mysql-client memcached \
+ sqlite postgresql sphinxsearch redis-server \
  git vim
 
 pear config-set auto_discover 1
-pear install pear.phpunit.de/PHPUnit phpunit/DbUnit phpunit/PHP_Invoker
+pear install pear.phpunit.de/PHPUnit phpunit/DbUnit
 
 
 #
@@ -51,19 +52,20 @@ service exim4 stop
 
 #Apache
 a2enmod rewrite
-a2enmod vhost_alias
+a2enmod macro
 a2ensite default
-cp /vagrant/provision/data/apache2/php_patch.php /etc/apache2
 cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
+/vagrant/bin/internal/update-apache-vhosts
+
 
 #MySQL
 sed -i "s/bind-address/#bind-address/g" /etc/mysql/my.cnf
 
 mysqld_safe --init-file=/vagrant/provision/data/mysql-init.sql &> /dev/null &
-echo "Wait for MySQL..."
+echo "Waiting for the MySQL init..."
 sleep 10s
 PID=`cat /var/run/mysqld/mysqld.pid`
-echo "Kill MySQL ($PID)..."
+echo "Killing the MySQL ($PID)..."
 kill ${PID}
 sleep 10s
 echo "Go on"
