@@ -28,7 +28,7 @@ echo "Using server IP $SERVER_IP"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y --no-install-recommends
-apt-get install -y bind9 dnsutils apache2 mysql-server mysql-client memcached \
+apt-get install -y apache2 mysql-server mysql-client memcached \
  php5 php-pear php5-mysql php5-memcache \
  sqlite postgresql sphinxsearch redis-server \
  python-pip python-mysqldb python-imaging python-redis python-memcache python-sphinx \
@@ -41,7 +41,6 @@ pear install pear.phpunit.de/PHPUnit phpunit/DbUnit phpunit/PHP_Invoker
 #
 #Configure
 #
-service bind9 stop
 service apache2 stop
 service mysql stop
 service postgresql stop
@@ -82,14 +81,6 @@ sed -i "s/bind 127.0.0.1/#bind 127.0.0.1/g" /etc/redis/redis.conf
 #Memcached
 sed -i "s/-l 127.0.0.1/#-l 127.0.0.1/g" /etc/memcached.conf
 
-#DNS
-chattr -i /etc/resolv.conf
-cp /vagrant/provision/data/bind9/db.loc /etc/bind
-cp /vagrant/provision/data/bind9/named.conf.local /etc/bind
-cp /vagrant/provision/data/resolv.conf /etc
-sed -i "s/{{SERVER_IP}}/${SERVER_IP}/g" /etc/bind/db.loc
-chattr +i /etc/resolv.conf
-
 #Sphinx
 cp /vagrant/provision/data/sphinxsearch /etc -R
 chmod +x /etc/sphinxsearch/sphinx.conf
@@ -105,7 +96,6 @@ sed -i "s/\"set background=dark/set background=dark/g" /etc/vim/vimrc
 #
 #Start services
 #
-service bind9 start
 service apache2 start
 service mysql start
 service postgresql start
