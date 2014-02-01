@@ -21,6 +21,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision 'shell' do |s|
     s.path = Params::PROVISION_DIR + '/init.sh'
-    s.args = '--server_ip=' + params[:server_ip]
+    s.args = Params.build_args
   end
 end
