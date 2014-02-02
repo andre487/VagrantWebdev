@@ -19,7 +19,7 @@
 
 Сервер предоставляет следующие сервисы:
  - Веб-сервер (Apache 2 + PHP 5.4),
- - Xdebug
+ - Xdebug ([его конфигурация](https://github.com/Andre-487/VagrantWebdev/blob/master/provision/data/php/xdebug.ini))
  - MySQL
  - PostgreSQL
  - Redis
