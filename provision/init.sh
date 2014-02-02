@@ -58,11 +58,11 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y --no-install-recommends
 apt-get install -y apache2 libapache2-mod-macro \
- php5 php-pear php5-mysql php5-memcache \
- python-pip python-mysqldb python-imaging python-redis python-memcache python-sphinx \
- mysql-server mysql-client memcached \
- sqlite postgresql sphinxsearch redis-server \
- git vim
+    php5 php-pear php5-mysql php5-memcache php5-gd php5-xdebug \
+    python-pip python-mysqldb python-imaging python-redis python-memcache python-sphinx \
+    mysql-server mysql-client memcached \
+    sqlite postgresql sphinxsearch redis-server \
+    git vim
 
 pear config-set auto_discover 1
 pear install pear.phpunit.de/PHPUnit phpunit/DbUnit
@@ -86,6 +86,11 @@ a2ensite default
 cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
 /vagrant/bin/internal/update-apache-vhosts
 
+#PHP
+if [ ! -d /vagrant/runtime/xdebug ]; then
+    mkdir /vagrant/runtime/xdebug
+fi
+cp /vagrant/provision/data/php/xdebug.ini /etc/php5/mods-available
 
 #MySQL
 sed -i "s/bind-address/#bind-address/g" /etc/mysql/my.cnf
