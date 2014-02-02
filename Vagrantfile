@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision 'shell' do |s|
-    s.path = Params::PROVISION_DIR + '/init.sh'
+    s.path = Params::PROVISION_DIR + '/configure.sh'
     s.args = Params.build_args
   end
 end
