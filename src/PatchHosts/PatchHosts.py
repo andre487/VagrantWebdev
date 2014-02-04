@@ -15,7 +15,8 @@ if hasattr(sys, "frozen") and sys.frozen in ("windows_exe", "console_exe"):
 else:
     current_dir = os.path.dirname(os.path.realpath(__file__))
 params_paths = (
-    os.path.abspath(current_dir + "/../params.ini"),
+    os.path.abspath(current_dir + "/params.ini"),
+    os.path.abspath(current_dir + "/../../params.ini"),
     os.path.abspath(current_dir + "/../../../params.ini"),
 )
 
@@ -78,8 +79,9 @@ def get_params():
 
 def get_virtual_hosts_names(params):
     hosts = []
-    for name in os.listdir(params["www_dir"]):
-        if os.path.isdir(os.path.join(params["www_dir"], name)):
+    www_dir = os.path.expanduser(params["www_dir"])
+    for name in os.listdir(www_dir):
+        if os.path.isdir(os.path.join(www_dir, name)):
             hosts.append(name)
     return hosts
 
@@ -104,6 +106,5 @@ if __name__ == "__main__":
     try:
         main()
     except BaseException as e:
-        print "Error!"
-        print str(e)
+        print "Error: {0}".format(e)
         raw_input("Press Enter to exit...")
