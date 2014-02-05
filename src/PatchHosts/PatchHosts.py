@@ -27,13 +27,13 @@ def main():
     hosts = get_virtual_hosts_names(params)
     hosts_content = get_hosts_file_content(hosts_path, hosts, params)
 
-    fd, tmp_file_path = tempfile.mkstemp(".txt")
-    os.close(fd)
-    open(tmp_file_path, "w").write(hosts_content)
-
     try:
-        shutil.move(tmp_file_path, hosts_path)
+        open(hosts_path, "w").write(hosts_content)
     except IOError as e:
+        fd, tmp_file_path = tempfile.mkstemp(".txt")
+        os.close(fd)
+        open(tmp_file_path, "w").write(hosts_content)
+
         print "Can't write hosts file: {0}{2}Look what you need in the file {1}".format(e, tmp_file_path, eol)
         webbrowser.open(tmp_file_path)
         raw_input("Press Enter to exit...")
