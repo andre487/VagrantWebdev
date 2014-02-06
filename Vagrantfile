@@ -19,8 +19,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ['modifyvm', :id, '--memory', params[:memory]]
   end
 
+=begin
   config.vm.provision 'shell' do |s|
     s.path = Params::PROVISION_DIR + '/configure.sh'
     s.args = Params.build_args
   end
+=end
 end
