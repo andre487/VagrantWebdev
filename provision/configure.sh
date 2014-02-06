@@ -57,7 +57,8 @@ echo "Using server IP $SERVER_IP"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y --no-install-recommends
-apt-get install -y apache2 libapache2-mod-macro \
+apt-get install -y dnsmasq resolvconf \
+    apache2 libapache2-mod-macro \
     php5 php-pear php5-mysql php5-pgsql php5-sqlite php5-memcache \
     php5-gd php5-xdebug php5-curl php5-mcrypt \
     python-mysqldb python-pygresql python-sqlite python-redis python-memcache python-sphinx \
@@ -73,6 +74,7 @@ pear install pear.phpunit.de/PHPUnit phpunit/DbUnit
 #
 #Configure
 #
+service dnsmasq stop
 service apache2 stop
 service mysql stop
 service postgresql stop
@@ -80,6 +82,9 @@ service redis-server stop
 service memcached stop
 service sphinxsearch stop
 service exim4 stop
+
+#Dnsmasq
+cp /vagrant/provision/data/dnsmasq.d/vhosts.conf /etc/dnsmasq.d
 
 #Apache
 a2enmod rewrite
@@ -156,6 +161,7 @@ sed -i "s/\"set background=dark/set background=dark/g" /etc/vim/vimrc
 #
 #Start services
 #
+service dnsmasq start
 service apache2 start
 service mysql start
 service postgresql start
