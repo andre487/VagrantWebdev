@@ -4,9 +4,8 @@ import os
 import re
 import webbrowser
 import sys
-import shutil
 import tempfile
-import ConfigParser
+from ConfigParser import ConfigParser
 
 
 eol = os.linesep
@@ -62,18 +61,14 @@ def get_params():
     if not (params_path and os.access(params_path, os.R_OK)):
         raise RuntimeError("Error while access params file")
 
-    parser = ConfigParser.ConfigParser()
+    parser = ConfigParser()
     parser.read(params_path)
 
     params = {
         "vhosts_section_id": parser.get("host_params", "vhosts_section_id"),
+        "www_dir": parser.get("host_params", "www_dir"),
         "server_ip": parser.get("guest_params", "server_ip"),
     }
-    if sys.platform == "win32":
-        params["www_dir"] = parser.get("host_params", "www_dir.win32")
-    else:
-        params["www_dir"] = parser.get("host_params", "www_dir.unix")
-
     return params
 
 

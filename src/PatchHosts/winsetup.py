@@ -27,11 +27,13 @@ manifest = """
 </assembly>
 """
 
+excludes = ["_ssl", "pyreadline", "difflib", "doctest", "locale", "optparse", "pickle", "calendar", "logging"]
+
 setup(
     name="PatchHosts Utility",
-    description="Utility to patch hosts file for .loc zone",
+    description="Utility to patch hosts file for loc name zone",
     author="Andre",
-    version="1.1",
+    version="1.0.0",
     console=[
         {
             "script": current_dir + "/PatchHosts.py",
@@ -44,7 +46,7 @@ setup(
             "bundle_files": 1,
             "compressed": True,
             "optimize": 2,
-            "excludes": ["_ssl", "pyreadline", "difflib", "doctest", "locale", "optparse", "pickle", "calendar"],
+            "excludes": excludes,
             "dll_excludes": ["msvcr71.dll", "w9xpopen.exe"],
             "dist_dir": os.path.abspath(current_dir + "/../../bin/win/utils"),
         }

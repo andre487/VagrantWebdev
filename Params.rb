@@ -1,6 +1,7 @@
 require 'shellwords'
 
 module Params
+  HOME = ENV['HOME']
   CURRENT_DIR = File.dirname(__FILE__)
   PROVISION_DIR = CURRENT_DIR + '/provision'
 
@@ -31,13 +32,8 @@ module Params
         :smtp_user => ini_values['smtp_user'],
         :smtp_password => ini_values['smtp_password'],
         :smtp_sender => ini_values['smtp_sender'],
+        :www_dir => ini_values['www_dir'].sub('~', HOME),
     }
-    if windows?
-      params[:www_dir] = ini_values['www_dir.win32']
-    else
-      params[:www_dir] = ini_values['www_dir.unix']
-    end
-
     return params
   end
 
