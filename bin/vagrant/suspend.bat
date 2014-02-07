@@ -1,3 +1,3 @@
 @echo off
-cd "%~dp0\..\..\.."
+cd "%~dp0\..\.."
 vagrant suspend

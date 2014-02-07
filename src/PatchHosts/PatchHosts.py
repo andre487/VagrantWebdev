@@ -16,7 +16,6 @@ else:
 params_paths = (
     os.path.abspath(current_dir + "/params.ini"),
     os.path.abspath(current_dir + "/../../params.ini"),
-    os.path.abspath(current_dir + "/../../../params.ini"),
 )
 
 

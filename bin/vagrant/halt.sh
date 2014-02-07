@@ -2,5 +2,5 @@
 set -e
 
 DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
-cd "$DIR/../../.."
-vagrant suspend
+cd "$DIR/../.."
+vagrant halt
