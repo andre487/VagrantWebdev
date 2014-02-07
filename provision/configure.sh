@@ -57,7 +57,7 @@ echo "Using server IP $SERVER_IP"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get upgrade -y --no-install-recommends
-apt-get install -y dnsmasq resolvconf \
+apt-get install -y dnsmasq exim4 \
     apache2 libapache2-mod-macro \
     php5 php-pear php5-mysql php5-pgsql php5-sqlite php5-memcache \
     php5-gd php5-xdebug php5-curl php5-mcrypt \
@@ -97,7 +97,7 @@ cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
 if [ ! -d /vagrant/runtime/xdebug ]; then
     mkdir /vagrant/runtime/xdebug
 fi
-cp /vagrant/provision/data/php/xdebug.ini /etc/php5/mods-available
+cp /vagrant/provision/data/php/xdebug.ini /etc/php5/conf.d/99_xdebug.ini
 
 #MySQL
 sed -i "s/bind-address/#bind-address/g" /etc/mysql/my.cnf
