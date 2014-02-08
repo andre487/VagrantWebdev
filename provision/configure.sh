@@ -76,7 +76,7 @@ fi
 
 if [[ `pecl list | grep redis` == "" ]]; then
     pecl install redis
-    cp /vagrant/provision/data/php/redis.ini /etc/php5/conf.d/20_redis.ini
+    cp /vagrant/provision/data/php/redis.ini /etc/php5/conf.d/20-redis.ini
 fi
 
 
@@ -106,7 +106,7 @@ cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
 if [ ! -d /vagrant/runtime/xdebug ]; then
     mkdir /vagrant/runtime/xdebug
 fi
-cp /vagrant/provision/data/php/xdebug.ini /etc/php5/conf.d/99_xdebug.ini
+cp /vagrant/provision/data/php/xdebug.ini /etc/php5/conf.d/99-xdebug.ini
 
 #MySQL
 sed -i "s/bind-address/#bind-address/g" /etc/mysql/my.cnf
