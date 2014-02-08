@@ -64,7 +64,7 @@ apt-get install -y dnsmasq exim4 \
     python-mysqldb python-pygresql python-sqlite python-redis python-memcache python-sphinx \
     python-pip python-imaging \
     mysql-server mysql-client memcached \
-    sqlite postgresql sphinxsearch redis-server \
+    sqlite sqlite3 postgresql sphinxsearch redis-server \
     git vim
 
 pear config-set auto_discover 1
