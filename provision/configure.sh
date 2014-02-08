@@ -61,7 +61,7 @@ apt-get install -y dnsmasq exim4 \
     apache2 libapache2-mod-macro \
     php5 php-pear php5-dev php5-mysql php5-pgsql php5-sqlite php5-memcache \
     php5-gd php5-xdebug php5-curl php5-mcrypt \
-    python-mysqldb python-pygresql python-sqlite python-redis python-memcache python-sphinx \
+    python-mysqldb python-pygresql python-psycopg2 python-sqlite python-redis python-memcache python-sphinx \
     python-pip python-imaging \
     mysql-server mysql-client memcached \
     sqlite sqlite3 postgresql sphinxsearch redis-server \
