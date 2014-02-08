@@ -112,7 +112,7 @@ sleep 10s
 echo "Go on"
 
 #PostgreSQL
-sed -i "s/#listen_addresses = "localhost"/listen_addresses = \"*\"/g" /etc/postgresql/9.1/main/postgresql.conf
+sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/9.1/main/postgresql.conf
 echo "postgres:password" | /usr/sbin/chpasswd
 cp /vagrant/provision/data/postgres/pg_hba.conf /etc/postgresql/9.1/main/
 cp /vagrant/provision/data/.pgpass /home/vagrant
