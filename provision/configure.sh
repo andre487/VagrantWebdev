@@ -52,7 +52,7 @@ echo "Using server IP $SERVER_IP"
 
 
 #
-#Install goods
+# Install goods
 #
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
@@ -61,27 +61,26 @@ apt-get install -y dnsmasq exim4 \
     apache2 libapache2-mod-macro \
     php5 php-pear php5-dev php5-mysql php5-pgsql php5-sqlite php5-memcache \
     php5-gd php5-xdebug php5-curl php5-mcrypt \
-    python-mysqldb python-pygresql python-psycopg2 python-sqlite python-redis python-memcache python-sphinx \
+    python-mysqldb python-pygresql python-psycopg2 python-sqlite python-redis python-memcache \
     python-pip python-imaging \
     mysql-server mysql-client memcached \
     sqlite sqlite3 postgresql sphinxsearch redis-server \
     git vim
 
-# Installations from the PEAR and PECL; if some of this brings errors, just remove it
+# Installations from the PEAR, PECL and PyPI; if some of this brings errors, just remove it
 pear config-set auto_discover 1
+pear install pear.phpunit.de/PHPUnit phpunit/DbUnit
 
-if [[ `pear list phpunit/PHPUnit | grep "not installed"` != "" ]]; then
-    pear install pear.phpunit.de/PHPUnit phpunit/DbUnit
-fi
+pip install sphinxsearch
 
-if [[ `pecl list | grep redis` == "" ]]; then
+if [[ `pecl list 2>/dev/null | grep redis` == "" ]]; then
     pecl install redis
     cp /vagrant/provision/data/php/redis.ini /etc/php5/conf.d/20-redis.ini
 fi
 
 
 #
-#Configure
+# Configure
 #
 service dnsmasq stop
 service apache2 stop
@@ -95,20 +94,20 @@ service exim4 stop
 #Dnsmasq
 cp /vagrant/provision/data/dnsmasq.d/vhosts.conf /etc/dnsmasq.d
 
-#Apache
+# Apache
 a2enmod rewrite
 a2enmod macro
 a2ensite default
 cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
 /vagrant/bin/internal/update-apache-vhosts
 
-#PHP
+# PHP
 if [ ! -d /vagrant/runtime/xdebug ]; then
     mkdir /vagrant/runtime/xdebug
 fi
 cp /vagrant/provision/data/php/xdebug.ini /etc/php5/conf.d/99-xdebug.ini
 
-#MySQL
+# MySQL
 sed -i "s/bind-address/#bind-address/g" /etc/mysql/my.cnf
 
 mysqld_safe --init-file=/vagrant/provision/data/mysql-init.sql &> /dev/null &
@@ -120,24 +119,26 @@ kill ${PID}
 sleep 10s
 echo "Go on"
 
-#PostgreSQL
+# PostgreSQL
 sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/9.1/main/postgresql.conf
 echo "postgres:password" | /usr/sbin/chpasswd
 cp /vagrant/provision/data/postgres/pg_hba.conf /etc/postgresql/9.1/main/
 cp /vagrant/provision/data/.pgpass /home/vagrant
 chmod 600 /home/vagrant/.pgpass
 
-#Redis
+# Redis
 sed -i "s/bind 127.0.0.1/#bind 127.0.0.1/g" /etc/redis/redis.conf
 
-#Memcached
+# Memcached
 sed -i "s/-l 127.0.0.1/#-l 127.0.0.1/g" /etc/memcached.conf
 
-#Sphinx
+# Sphinx
 cp /vagrant/provision/data/sphinxsearch /etc -R
 chmod +x /etc/sphinxsearch/sphinx.conf
+sed -i "s/START=no/START=yes/g" /etc/default/sphinxsearch
 
-#Exim4
+
+# Exim4
 if [[ "$USE_SMTP" == "1" && "$SMTP_HOST" && "$SMTP_PORT" && "$SMTP_USER" && "$SMTP_PASSWORD" && "$SMTP_SENDER" ]]; then
     echo "Exim4 mode is satelite"
     echo "Using smtp host $SMTP_HOST"
@@ -162,13 +163,13 @@ else
     echo "" > /etc/email-addresses
 fi
 
-#Vim
+# Vim
 sed -i "s/\"syntax on/syntax on/g" /etc/vim/vimrc
 sed -i "s/\"set background=dark/set background=dark/g" /etc/vim/vimrc
 
 
 #
-#Start services
+# Start services
 #
 service dnsmasq start
 service apache2 start
@@ -178,3 +179,8 @@ service redis-server start
 service memcached start
 service sphinxsearch start
 service exim4 start
+
+#
+# After configuring
+#
+/usr/bin/indexer --rotate --all --config /etc/sphinxsearch/sphinx.conf
