@@ -59,7 +59,7 @@ apt-get update
 apt-get upgrade -y --no-install-recommends
 apt-get install -y dnsmasq exim4 \
     apache2 libapache2-mod-macro \
-    php5 php-pear php5-mysql php5-pgsql php5-sqlite php5-memcache \
+    php5 php-pear php5-dev php5-mysql php5-pgsql php5-sqlite php5-memcache \
     php5-gd php5-xdebug php5-curl php5-mcrypt \
     python-mysqldb python-pygresql python-sqlite python-redis python-memcache python-sphinx \
     python-pip python-imaging \
@@ -67,8 +67,17 @@ apt-get install -y dnsmasq exim4 \
     sqlite sqlite3 postgresql sphinxsearch redis-server \
     git vim
 
+# Installations from the PEAR and PECL; if some of this brings errors, just remove it
 pear config-set auto_discover 1
-pear install pear.phpunit.de/PHPUnit phpunit/DbUnit
+
+if [[ `pear list phpunit/PHPUnit | grep "not installed"` != "" ]]; then
+    pear install pear.phpunit.de/PHPUnit phpunit/DbUnit
+fi
+
+if [[ `pecl list | grep redis` == "" ]]; then
+    pecl install redis
+    cp /vagrant/provision/data/php/redis.ini /etc/php5/conf.d/20_redis.ini
+fi
 
 
 #
