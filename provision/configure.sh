@@ -104,6 +104,7 @@ cp /vagrant/provision/data/apache2/default /etc/apache2/sites-available
 # PHP
 if [ ! -d /vagrant/runtime/xdebug ]; then
     mkdir /vagrant/runtime/xdebug
+    chmod 777 /vagrant/runtime/xdebug
 fi
 cp /vagrant/provision/data/php/xdebug.ini /etc/php5/conf.d/99-xdebug.ini
 
